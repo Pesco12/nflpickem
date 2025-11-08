@@ -7,8 +7,11 @@ export default function Input({
   type = 'text',
   onChange,
   value,
+  autoComplete,
+  name,
   placeholder,
   className = '',
+  error,
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -23,11 +26,19 @@ export default function Input({
       <div className="relative">
         <input
           id={id}
+          name={name || id}
           type={inputType}
           value={value}
+          autoComplete={autoComplete}
           placeholder={placeholder}
-          className="px-4 py-4 w-full rounded-lg border text border-grayBorder bg-inputBg text-white font-light focus:outline-none focus:ring-2 focus:ring-primary"
+          onChange={onChange}
+          className={`px-4 py-4 w-full rounded-lg border text bg-inputBg text-white font-light focus:outline-none focus:ring-2 ${
+            error
+              ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+              : 'border-grayBorder focus:ring-primary'
+          }`}
         />
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         {type === 'password' && (
           <button
             type="button"
